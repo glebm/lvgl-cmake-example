@@ -1,0 +1,15 @@
+BasedOnStyle: google
+Standard: c++20
+AlignTrailingComments: true
+AllowShortBlocksOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: WithoutElse
+DerivePointerAlignment: false
+PointerAlignment: Right
+IndentWidth: 4
+TabWidth: 4
+UseTab: AlignWithSpaces
+SortIncludes: true
+NamespaceIndentation: None
+FixNamespaceComments: true

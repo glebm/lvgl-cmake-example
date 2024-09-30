@@ -1,0 +1,78 @@
+---
+# clang-tidy configuration
+#
+# clang-tidy can be run manually like this:
+#
+#     run-clang-tidy -p build "${PWD}/src/.*"
+#
+# To apply fixes suggested by clang-tidy, run:
+#
+#     run-clang-tidy -p build -fix -format "${PWD}/src/.*"
+#
+# To limit the run to certain checks:
+#
+#     run-clang-tidy -checks='-*,modernize-use-nullptr' -p build "${PWD}/src/.*"
+#
+# clang-tidy also has several IDE integrations listed here:
+# https://clang.llvm.org/extra/clang-tidy/Integrations.html
+Checks: >
+  -*,
+  bugprone-*,
+  google-*,
+  misc-*,
+  modernize-*,
+  performance-*,
+  portability-*,
+  readability-*,
+  google-runtime-int,
+  llvm-include-order,
+  llvm-namespace-comment,
+  -modernize-use-trailing-return-type,
+  -modernize-return-braced-init-list,
+  -modernize-avoid-c-arrays,
+  -bugprone-narrowing-conversions,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-implicit-widening-of-multiplication-result,
+  -readability-magic-numbers,
+  -readability-identifier-length,
+  -misc-include-cleaner
+
+HeaderFilterRegex: "src/.*\\.(h|hpp)$"
+
+CheckOptions:
+  - { key: readability-identifier-naming.NamespaceCase,          value: lower_case }
+  - { key: readability-identifier-naming.ClassCase,              value: CamelCase  }
+  - { key: readability-identifier-naming.StructCase,             value: CamelCase  }
+  - { key: readability-identifier-naming.TemplateParameterCase,  value: CamelCase  }
+  - { key: readability-identifier-naming.FunctionCase,           value: aNy_CasE  }
+  - { key: readability-identifier-naming.VariableCase,           value: lower_case }
+  - { key: readability-identifier-naming.ClassMemberCase,        value: lower_case }
+  - { key: readability-identifier-naming.ClassMemberSuffix,      value: _          }
+  - { key: readability-identifier-naming.PrivateMemberSuffix,    value: _          }
+  - { key: readability-identifier-naming.ProtectedMemberSuffix,  value: _          }
+  - { key: readability-identifier-naming.EnumConstantCase,         value: CamelCase }
+  - { key: readability-identifier-naming.EnumConstantPrefix,       value: k         }
+  - { key: readability-identifier-naming.ConstexprVariableCase,    value: CamelCase }
+  - { key: readability-identifier-naming.ConstexprVariablePrefix,  value: k         }
+  - { key: readability-identifier-naming.GlobalConstantCase,       value: CamelCase }
+  - { key: readability-identifier-naming.GlobalConstantPrefix,     value: k         }
+  - { key: readability-identifier-naming.MemberConstantCase,       value: CamelCase }
+  - { key: readability-identifier-naming.MemberConstantPrefix,     value: k         }
+  - { key: readability-identifier-naming.StaticConstantCase,       value: CamelCase }
+  - { key: readability-identifier-naming.StaticConstantPrefix,     value: k         }
+  - { key: readability-implicit-bool-conversion.AllowIntegerConditions,  value: 1   }
+  - { key: readability-implicit-bool-conversion.AllowPointerConditions,  value: 1   }
+  - { key: readability-function-cognitive-complexity.IgnoreMacros,  value: 1   }
+
+  # Allow short if-statements without braces
+  - { key: readability-braces-around-statements.ShortStatementLines, value: 3 }
+
+  # Use <cstdint> fixed-width integer types instead of short, long and long long
+  - { key: google-runtime-int.UnsignedTypePrefix, value: "uint" }
+  - { key: google-runtime-int.SignedTypePrefix, value: "int" }
+  - { key: google-runtime-int.TypeSuffix, value: "_t" }
+
+  # `int8_t` aren't used as chars, disable misleading warning.
+  - { key: bugprone-signed-char-misuse.CharTypdefsToIgnore, value: "int8_t" }
+
+  - { key: readability-identifier-length.MinimumLoopCounterNameLength, value: 1 }
